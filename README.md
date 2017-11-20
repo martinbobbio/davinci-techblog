@@ -1,6 +1,6 @@
 ## Tech Blog
 
-![Image of inicio](Parte 4/techblog/src/main/webapp/images/logo.png)
+![Image of inicio](images/logo.png)
 
 **Descripcion:**
 Trabajo práctico del sexto cuatrimestre de la Escuela DaVinci desarrollado con *Maven*, *JSF* y un maquetado con *Materialize*.
@@ -12,23 +12,23 @@ Maven, Tomee, Materialize y Java
 
 Inicio:
 
-![Image of inicio](src/main/webapp/images/Captura5.JPG)
+![Image of inicio](images/Captura5.JPG)
 
 Lista de Posts:
 
-![Image of inicio](src/main/webapp/images/Captura2.JPG)
+![Image of inicio](images/Captura2.JPG)
 
 Comentarios:
 
-![Image of inicio](src/main/webapp/images/Captura3.JPG)
+![Image of inicio](images/Captura3.JPG)
 
 Vista de Registro:
 
-![Image of inicio](src/main/webapp/images/Captura4.JPG)
+![Image of inicio](images/Captura4.JPG)
 
 Menu de Perfil:
 
-![Image of inicio](src/main/webapp/images/Captura.JPG)
+![Image of inicio](images/Captura.JPG)
 
 **¿Como utilizo este proyecto?**
 Para que el proyecto se conecte con *Maven* y haga la conexion con la Base de datos es necesario seguir los siguientes pasos:
