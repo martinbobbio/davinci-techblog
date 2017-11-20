@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<ui:composition template="/WEB-INF/templates/base.xhtml">
+
+	<ui:define name="title">Tech Blog - Perfil</ui:define>
+
+	<ui:define name="content">
+
+	<ui:include src="/WEB-INF/templates/header.xhtml"/>
+
+	<div class="row" style="margin: 0 auto;">
+		<div class="col s12 m8 l8 offset-m2 offset-l2">
+
+			<h3 class="red-text darken-1">
+				Perfil de
+				<h:outputText value="#{authMb.user.name}" />
+			</h3>
+
+			<ui:repeat var="post" value="#{postMb.getMyPosts()}">
+				<div class="col s12 m6 l4">
+					<div class="card">
+						<div class="card-image">
+							<img src="https://placeimg.com/400/200/tech" /> <span
+								class="card-title">#{post.user.name}</span>
+						</div>
+						<div class="card-content">
+							<p>#{post.contenido}</p>
+						</div>
+						<div class="card-action">
+							<p href="#">#{post.date}hs</p>
+						</div>
+					</div>
+				</div>
+			</ui:repeat>
+
+
+
+
+
+
+		</div>
+	</div>
+
+</ui:define>
+</ui:composition>
+</html>

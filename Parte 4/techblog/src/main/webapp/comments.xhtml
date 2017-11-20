@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<ui:composition template="/WEB-INF/templates/base.xhtml">
+
+	<ui:define name="title">Tech Blog - Comentarios</ui:define>
+
+	<ui:define name="content">
+
+	<ui:include src="/WEB-INF/templates/header.xhtml"/>
+
+	<h:outputText rendered="#{authMb.user.is_admin == 1}">
+		<div class="container">
+
+			<h2 class="red-text text-darken-1">Lista de Comentarios</h2>
+
+			<h:panelGroup id="listComments">
+				<h:dataTable value="#{commentMb.getComments()}" var="c"
+					styleClass="responsive-table">
+					<h:column>
+						<f:facet name="header">Id</f:facet>
+		    					#{c.id}
+		    	</h:column>
+					<h:column>
+						<f:facet name="header">Usuario</f:facet>
+		    					#{c.user.name}
+		    	</h:column>
+					<h:column>
+						<f:facet name="header">Post</f:facet>
+								<strong>#{c.post.user.name}:</strong> #{c.post.contenido}
+					</h:column>
+					<h:column>
+						<f:facet name="header">Comentario</f:facet>
+									#{c.content}
+		    	</h:column>
+					<h:column>
+						<f:facet name="header">Acciones</f:facet>
+							<h:form>
+								<div>
+								<h:commandLink action="#{commentMb.deleteComment(c)}" styleClass="waves-effect red-text waves-red btn-flat">
+										Borrar
+										<i class="material-icons red-text right">delete</i>
+									<f:ajax render="listComments" execute="@form"></f:ajax>
+								</h:commandLink>
+								</div>
+							</h:form>
+					</h:column>
+
+				</h:dataTable>
+			</h:panelGroup>
+
+		</div>
+	</h:outputText>
+
+</ui:define>
+</ui:composition>
+</html>
