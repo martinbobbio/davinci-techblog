@@ -28,15 +28,18 @@
 				</div>
 				<div>
 					<h:panelGroup layout="block" id="listUsers">
+						<script src="/js/scripts.js"></script>
 						<h5 class="red-text" style="margin-bottom:30px;">#{searchMb.updateSearchUserText()}</h5>
 						<ul class="collection">
 							<ui:repeat var="user" value="#{searchMb.getUsersSearch()}">
 								<li class="collection-item avatar" style="position:relative">
-									<img src="#{authMb.getSrcImage(user)}" alt="" class="circle"/>
-									<strong class="title">#{user.name}</strong>
-									<p>Seguidores: #{followerMb.getFollowersByUser(user)} <br/>
-										<span class="#{followerMb.getMessageFollowColor(user)}">#{followerMb.getMessageFollow(user)}</span>
-									</p>
+									<a href="#modalsearch#{user.id}"  onclick="openModalSearch(#{user.id})" class="black-text">
+										<img src="#{authMb.getSrcImage(user)}" alt="" class="circle"/>
+										<strong class="title">#{user.name}</strong>
+										<p>Seguidores: #{followerMb.getFollowersByUser(user)} <br/>
+											<span class="#{followerMb.getMessageFollowColor(user)}">#{followerMb.getMessageFollow(user)}</span>
+										</p>
+									</a>
 									<div style="position:absolute;right: 5%;top:30%;">
 										<h:form style="display:inline;margin-left:10px;">
 											<h:commandLink action="#{followerMb.crearFollower(user)}">
@@ -46,9 +49,33 @@
 										</h:form>
 									</div>
 								</li>
+								<div id="modalsearch#{user.id}" style="height: 250% !important;" class="modal">
+									<div class="modal-content">
+										<h3 class="red-text darken-1">Posts de #{user.name}</h3>
+										<div class="row">
+											<ui:repeat var="post" value="#{postMb.getPostsByUser(user)}">
+												<div class="col s12 m6">
+													<div class="card">
+														<div class="card-image">
+															<img src="https://placeimg.com/400/200/tech" /> <span
+																class="card-title">#{post.user.name}</span>
+														</div>
+														<div class="card-content">
+															<p>#{post.contenido}</p>
+														</div>
+														<div class="card-action">
+															<p href="#">#{post.date}hs</p>
+														</div>
+													</div>
+												</div>
+											</ui:repeat>
+										</div>
+									</div>
+								</div>
 							</ui:repeat>
 						</ul>
 						<br/>
+						
 					</h:panelGroup>
 				</div>
 			</div>

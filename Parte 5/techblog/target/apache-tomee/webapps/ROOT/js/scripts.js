@@ -8,6 +8,11 @@ $(document).ready(function(){
 function openModal(id) {
   $('#modal'+id).modal('open');
 }
+
+function openModalSearch(id) {
+  $('#modalsearch'+id).modal('open');
+}
+
 function commentSuccesful(id) {
   $('#modal'+id).modal('close');
     Materialize.toast('Se ha creado tu comentario', 8000);

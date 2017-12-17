@@ -15,6 +15,7 @@ import controller.ImagePostController;
 import controller.PostController;
 import model.ImagePost;
 import model.Post;
+import model.User;
 
 @Named
 @SessionScoped
@@ -51,6 +52,10 @@ public class PostMb implements Serializable {
 
 	public List<Post> getMyPosts() {
 		return pc.getPostsByUser(authMb.getUser());
+	}
+	
+	public List<Post> getPostsByUser(User user) {
+		return pc.getPostsByUser(user);
 	}
 
 	public void crearPost() {
