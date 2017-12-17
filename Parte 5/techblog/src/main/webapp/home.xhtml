@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<ui:composition template="/WEB-INF/templates/base.xhtml">
+
+		<ui:define name="title">Tech Blog - Inicio</ui:define>
+
+		<ui:define name="content">
+
+		<ui:include src="/WEB-INF/templates/header.xhtml"/>
+
+		<div class="grey lighten-4">
+			<div class="container form-search">
+				<div class="row">
+					<div class="col s8 red-text" style="margin-top:20px;font-size:21px;text-align:right">Buscar usuarios:</div>
+					<div class="input-field col s4">
+					<h:form id="formSearch">
+						<h:inputText value="#{searchMb.searchText}" id="save" style="width: 80%;"/>
+						<h:commandLink action="#{searchMb.searchUser()}">
+							<i class="material-icons red-text right" style="margin-top:7px;">search</i>
+							<f:ajax render="listUsers" execute="formSearch"></f:ajax>
+						</h:commandLink>
+					</h:form>
+					</div>
+				</div>
+				<div>
+					<h:panelGroup layout="block" id="listUsers">
+						<h5 class="red-text" style="margin-bottom:30px;">#{searchMb.updateSearchUserText()}</h5>
+						<ul class="collection">
+							<ui:repeat var="user" value="#{searchMb.getUsersSearch()}">
+								<li class="collection-item avatar" style="position:relative">
+									<img src="#{authMb.getSrcImage(user)}" alt="" class="circle"/>
+									<strong class="title">#{user.name}</strong>
+									<p>Seguidores: #{followerMb.getFollowersByUser(user)} <br/>
+										<span class="#{followerMb.getMessageFollowColor(user)}">#{followerMb.getMessageFollow(user)}</span>
+									</p>
+									<div style="position:absolute;right: 5%;top:30%;">
+										<h:form style="display:inline;margin-left:10px;">
+											<h:commandLink action="#{followerMb.crearFollower(user)}">
+												<i class="material-icons red-text" style="font-size:22px;">#{followerMb.getIfExists(user)}</i>
+												<f:ajax render="listUsers" execute="@form"></f:ajax>
+											</h:commandLink>
+										</h:form>
+									</div>
+								</li>
+							</ui:repeat>
+						</ul>
+						<br/>
+					</h:panelGroup>
+				</div>
+			</div>
+		</div>
+
+		<div class="row" style="margin: 0 auto;">
+			<div class="col s12 m8 l8 offset-m2 offset-l2">
+
+				<h3 class="red-text darken-1">
+					Bienvenido
+					<h:outputText value="#{authMb.user.name}" />
+				</h3>
+				<br></br>
+
+				<h:form enctype="multipart/form-data" id="formPost">
+
+					<div class="input-field">
+						<i class="material-icons prefix">mode_edit</i>
+						<h:inputTextarea id="contenido" class="materialize-textarea content-post"
+							value="#{postMb.contenido}">
+						</h:inputTextarea>
+						<label for="icon_prefix2">Inspirate</label>
+
+						<div class="file-field input-field">
+				      <div class="waves-effect red btn">
+				        <span><i class="material-icons right">attach_file</i>
+					    	Imagen</span>
+				        <h:inputFile id="file" value="#{postMb.file}"/>
+				      </div>
+				      <div class="file-path-wrapper">
+				        <input class="file-path validate" type="text" placeholder="Subí imagen de tu historia"/>
+				      </div>
+				    </div>
+
+						<br></br>
+
+
+						<h:commandLink onclick="postSuccesful()"
+							styleClass="waves-effect red btn" action="#{postMb.crearPost()}">
+							<i class="material-icons right">send</i>
+				    	Publicar
+				    	<f:ajax render="listPost" execute="formPost"></f:ajax>
+						</h:commandLink>
+					</div>
+
+				</h:form>
+
+
+				<br></br> <br></br>
+				<hr></hr>
+				<br></br>
+
+				
+				<div class="row">
+					<div class="col s8">
+						<h3 class="red-text darken-1">Inicio - Posts</h3>
+					</div>
+					<div class="input-field col s4">
+						<h:form id="formFilter">
+							<h:selectOneMenu value="#{postMb.statusFilter}">
+								<f:selectItem itemValue="1" itemLabel="Todos los posts"></f:selectItem>
+								<f:selectItem itemValue="2" itemLabel="Mis Posts"></f:selectItem>
+							</h:selectOneMenu>
+							<label>Seleccionar</label>
+							<h:commandLink styleClass="waves-effect red btn" action="#{postMb.filtrarPost()}">
+							<i class="material-icons right">filter_list</i>
+							Filtrar
+							<f:ajax render="listPost" execute="formFilter"></f:ajax>
+							</h:commandLink>
+						</h:form>
+					</div>
+				</div>
+				
+				
+
+				<h:panelGroup layout="block" id="listPost">
+					<script src="/js/scripts.js"></script>
+					<ui:repeat var="post" value="#{postMb.getPosts()}">
+						<div class="col s12 m6">
+
+							<div class="card">
+								<div class="card-image">
+									<div class="card-image-position">
+										<img class="materialboxed" src="#{postMb.getSrcImage(post)}" width="100%" height="300"/>
+										<div class="card-buttons-position-bottom">
+											<span style="margin-right: 5px;"
+												class="btn-floating activator waves-effect waves-light grey darken-2">
+												<i class="large material-icons">remove_red_eye</i>
+											</span>
+											<a href="#modal#{post.id}" onclick="openModal(#{post.id})"
+												class="btn-floating waves-effect waves-light green">
+												<i class="large material-icons">comment</i>
+											</a>
+											<h:form style="display:inline;margin-left:10px;">
+												<h:commandLink action="#{favoriteMb.crearFavorite(post)}" styleClass="btn-floating waves-effect waves-light red">
+													<i class="large material-icons">#{favoriteMb.getIfExists(post)}</i>
+													<f:ajax render="listPost" execute="@form"></f:ajax>
+												</h:commandLink>
+											</h:form>
+										</div>
+										<div class="card-buttons-position-top-right">
+											<i class="material-icons medium red-text">#{postMb.getIsImage(post)}</i>
+										</div>
+
+									</div>
+									<span style="font-weight: bold"
+										class="card-title red-text darken-1">
+										<small>#{post.date}hs</small>
+									</span>
+
+								</div>
+
+								<div class="card-content">
+									<div class="row">
+										<div class="col s2">
+											<img class="circle responsive-img" src="#{authMb.getSrcImage(post.user)}" alt="profile"/>
+										</div>
+										<div class="col s10">
+										<span class="card-username red-text darken-1">#{post.user.name}</span>
+										<br></br>
+										<p class="title-post card-contenido">#{post.contenido}</p>
+										</div>
+									</div>
+								</div>
+
+								<div id="card-reveal#{post.id}" class="card-reveal">
+									<span class="card-title grey-text text-darken-2">Comentarios<i
+										class="material-icons right">close</i></span>
+									<h:panelGroup layout="block" id="listComment">
+										<ui:repeat var="comment" value="#{commentMb.listByPost(post)}">
+											<p>
+												<a href="" class="collection-item black-text"> <strong
+													class="red-text">#{comment.user.name}:</strong>
+													#{comment.content} <small>#{comment.date}</small>
+												</a>
+											</p>
+										</ui:repeat>
+									</h:panelGroup>
+								</div>
+
+								<div class="card-action">
+									<a style="cursor: pointer"
+										class="grey-text darken-2 activator">
+										#{commentMb.getMessageFromTotalComments(post)} </a>
+										#{favoriteMb.getMessageFromTotalFavorites(post)}
+								</div>
+							</div>
+
+							<div id="modal#{post.id}" class="modal">
+								<h:form>
+									<div class="modal-content">
+										<p>
+											#{post.user.name} dice: <span class="red-text">"#{post.contenido}"</span>
+										</p>
+										<div class="input-field col s12">
+											<h:inputTextarea id="icon_prefix1"
+												styleClass="materialize-textarea"
+												value="#{commentMb.content}"></h:inputTextarea>
+											<label for="icon_prefix1">Comentar</label>
+										</div>
+									</div>
+									<div class="modal-footer">
+										<a href="#!" onclick="openModal(#{post.id})"
+											class="modal-action modal-close waves-effect red-text waves-red btn-flat">
+											Cancelar </a>
+										<h:commandLink onclick="commentSuccesful(#{post.id})"
+											action="#{commentMb.createComment(post)}"
+											styleClass="modal-action waves-effect green-text waves-red btn-flat">
+									Confirmar
+									<f:ajax render="listPost" execute="@form"></f:ajax>
+										</h:commandLink>
+									</div>
+								</h:form>
+							</div>
+
+						</div>
+					</ui:repeat>
+
+				</h:panelGroup>
+
+
+
+
+
+
+			</div>
+		</div>
+
+	</ui:define>
+
+</ui:composition>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<ui:composition template="/WEB-INF/templates/base.xhtml">
+
+	<ui:define name="title">Tech Blog - Usuarios</ui:define>
+
+	<ui:define name="content">
+
+	<ui:include src="/WEB-INF/templates/header.xhtml"/>
+
+	<h:outputText rendered="#{authMb.user.is_admin == 1}">
+		<div class="container">
+
+			<h2 class="red-text text-darken-1">Lista de usuarios</h2>
+
+			<h:panelGroup id="listUsers">
+				<h:dataTable value="#{userMb.getUsers()}" var="u"
+					styleClass="responsive-table">
+					<h:column>
+						<f:facet name="header">Id</f:facet>
+		    					#{u.id}
+		    	</h:column>
+					<h:column>
+						<f:facet name="header">Email</f:facet>
+		    					#{u.email}
+		    	</h:column>
+					<h:column>
+						<f:facet name="header">Nombre</f:facet>
+		    					#{u.name}
+		    	</h:column>
+					<h:column>
+						<f:facet name="header">Admin</f:facet>
+						<h:outputLabel rendered="#{u.is_admin == 1}">
+							<i class="material-icons green-text">check</i>
+						</h:outputLabel>
+						<h:outputLabel rendered="#{u.is_admin == 0}">
+							<i class="material-icons red-text">clear</i>
+						</h:outputLabel>
+					</h:column>
+					<h:column>
+						<f:facet name="header">Acciones</f:facet>
+							<h:form>
+								<div>
+								<h:commandLink action="#{userMb.deleteUser(u)}" styleClass="waves-effect red-text waves-red btn-flat">
+										Borrar
+										<i class="material-icons red-text right">delete</i>
+									<f:ajax render="listUsers" execute="@form"></f:ajax>
+								</h:commandLink>
+								</div>
+							</h:form>
+					</h:column>
+
+				</h:dataTable>
+			</h:panelGroup>
+
+		</div>
+	</h:outputText>
+
+</ui:define>
+</ui:composition>
+</html>

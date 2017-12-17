@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<ui:composition template="/WEB-INF/templates/base.xhtml">
+
+	<ui:define name="title">Tech Blog - Posts</ui:define>
+
+	<ui:define name="content">
+
+	<ui:include src="/WEB-INF/templates/header.xhtml"/>
+
+	<h:outputText rendered="#{authMb.user.is_admin == 1}">
+		<div class="container">
+
+			<h2 class="red-text text-darken-1">Lista de posts</h2>
+
+			<h:panelGroup id="listPosts">
+				<h:dataTable value="#{postMb.getPosts()}" var="p"
+					styleClass="responsive-table">
+
+					<h:column>
+						<f:facet name="header">Id</f:facet>
+		    					#{p.id}
+		    	</h:column>
+
+					<h:column>
+						<f:facet name="header">Usuario</f:facet>
+		    					#{p.user.email}
+		    	</h:column>
+
+					<h:column>
+						<f:facet name="header">Contenido</f:facet>
+		    					#{p.contenido}
+		    	</h:column>
+
+					<h:column>
+						<f:facet name="header">Comentarios</f:facet>
+		    					#{commentMb.getTotalComments(p)}
+		    	</h:column>
+
+					<h:column>
+						<f:facet name="header">Tiene imagen</f:facet>
+						<h:outputLabel rendered="#{p.image != null}">
+							<i class="material-icons green-text">check</i>
+						</h:outputLabel>
+						<h:outputLabel rendered="#{p.image == null}">
+							<i class="material-icons red-text">clear</i>
+						</h:outputLabel>
+					</h:column>
+
+					<h:column>
+						<f:facet name="header">Fecha</f:facet>
+		    					#{p.date}hs
+		    	</h:column>
+					<h:column class="hide#{p.id}">
+						<f:facet name="header">Acciones</f:facet>
+							<h:form>
+								<div>
+								<h:commandLink action="#{postMb.deletePost(p)}" styleClass="waves-effect red-text waves-red btn-flat">
+									<span id="text-delete#{p.id}">Borrar
+										<i class="material-icons red-text right">delete</i>
+									</span>
+									<f:ajax render="listPosts" execute="@form"></f:ajax>
+								</h:commandLink>
+								</div>
+							</h:form>
+					</h:column>
+
+				</h:dataTable>
+			</h:panelGroup>
+
+		</div>
+	</h:outputText>
+
+</ui:define>
+</ui:composition>
+</html>
