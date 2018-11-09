@@ -17,6 +17,8 @@ Tecnologias usadas:
 - Materialize
 - Java
 
+# Capturas
+
 ### Inicio:
 
 ![Image of inicio](images/Captura5.JPG)
