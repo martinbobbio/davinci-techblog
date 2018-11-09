@@ -1,34 +1,43 @@
-## Tech Blog
+<h1 align="center">
+  <br>
+  <img src="images/logo.png" alt="Molino" width="200">
+  <br>
+  Techblog
+  <br>
+</h1>
 
-![Image of inicio](images/logo.png)
-
-**Descripcion:**
+# Descripcion
 Trabajo práctico del sexto cuatrimestre de la Escuela DaVinci desarrollado con *Maven*, *JSF* y un maquetado con *Materialize*.
 La pagina ofrece un sistema de *login*, *registro* y la posibilidad que los usuarios suban posts y puedan ver los que subieron.
 Todo esto se realiza mediante conexiones a una Base de datos *SQL* y con el modelo de la misma generada por *Entities*.
 
-**Tecnologias usadas:**
-Maven, Tomee, Materialize y Java
+Tecnologias usadas:
+- Maven
+- Tomee
+- Materialize
+- Java
 
-Inicio:
+### Inicio:
 
 ![Image of inicio](images/Captura5.JPG)
 
-Lista de Posts:
+### Lista de Posts:
 
-![Image of inicio](images/Captura2.JPG)
+### ![Image of inicio](images/Captura2.JPG)
 
-Comentarios:
+### Comentarios:
 
 ![Image of inicio](images/Captura3.JPG)
 
-Vista de Registro:
+### Vista de Registro:
 
 ![Image of inicio](images/Captura4.JPG)
 
-Menu de Perfil:
+### Menu de Perfil:
 
 ![Image of inicio](images/Captura.JPG)
+
+# Instalación
 
 **¿Como utilizo este proyecto?**
 Para que el proyecto se conecte con *Maven* y haga la conexion con la Base de datos es necesario seguir los siguientes pasos:
